@@ -52,3 +52,40 @@ class CrimeRecord(Base):
 
     # Note: We omitted the 'location' column (the composite object) 
     # because 'latitude' and 'longitude' already store that data efficiently.
+
+class CommunityArea(Base):
+    __tablename__ = "dim_community_areas"
+    # Socrata API Field: 'area_num_1' or 'area_numbe' usually
+    # We map whatever the API gives to these columns
+    id: Mapped[str] = mapped_column(String(10), primary_key=True) 
+    name: Mapped[Optional[str]] = mapped_column(String(100))
+
+class IUCR(Base):
+    __tablename__ = "dim_iucr"
+    # Socrata: 'iucr'
+    id: Mapped[str] = mapped_column(String(10), primary_key=True)
+    primary_desc: Mapped[Optional[str]] = mapped_column(String(100))
+    secondary_desc: Mapped[Optional[str]] = mapped_column(String(100))
+    index_code: Mapped[Optional[str]] = mapped_column(String(1))
+    is_active: Mapped[Optional[bool]] = mapped_column(Boolean)
+
+class Ward(Base):
+    __tablename__ = "dim_wards"
+    # Socrata: 'ward'
+    id: Mapped[str] = mapped_column(String(10), primary_key=True)
+
+class Beat(Base):
+    __tablename__ = "dim_beats"
+    # Socrata API: district, sector, beat, beat_num
+    # We use beat_num as the primary key
+    beat_num: Mapped[str] = mapped_column(String(10), primary_key=True)
+    district: Mapped[Optional[str]] = mapped_column(String(10))
+    sector: Mapped[Optional[str]] = mapped_column(String(10))
+    beat: Mapped[Optional[str]] = mapped_column(String(10))
+
+class District(Base):
+    __tablename__ = "dim_districts"
+    # Socrata API: dist_label, dist_num
+    # We use dist_num as the primary key
+    dist_num: Mapped[str] = mapped_column(String(10), primary_key=True)
+    dist_label: Mapped[Optional[str]] = mapped_column(String(100))

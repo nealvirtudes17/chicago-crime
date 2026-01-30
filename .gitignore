@@ -12,3 +12,8 @@ wheels/
 
 #Secrets
 .env
+
+
+#testing code
+
+jupyter.ipynb
